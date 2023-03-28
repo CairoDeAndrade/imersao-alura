@@ -4,7 +4,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -23,10 +26,17 @@ public class Main {
         }
 
         String body = response.body();
-        System.out.println(body);
 
         // We will get only the useful data (Title, Poster and Rating)
+        JsonParser parser = new JsonParser();
+        List<Map<String, String>> moviesList = parser.parse(body);
 
         // Display and manipulate the data
+        for(Map<String, String> movie: moviesList){
+            System.out.println(movie.get("title"));
+            System.out.println(movie.get("image"));
+            System.out.println(movie.get("imDbRating"));
+            System.out.println();
+        }
     }
 }
