@@ -1,7 +1,6 @@
 import entities.ClientHttp;
 import entities.Content;
 import utils.APIExtractor;
-import utils.ImdbAPIExtractor;
 import utils.NasaAPIExtractor;
 import utils.StickerFactory;
 
@@ -34,10 +33,10 @@ public class Main {
 
         var stickerFactory = new StickerFactory();
         for (Content content : contentList) {
-            System.out.println(content.getTitle());
+            System.out.println(content.title());
 
-            String imageUrl = content.getUrl();
-            String fileName = folderPath + content.getTitle() + ".png";
+            String imageUrl = content.url();
+            String fileName = folderPath + content.title() + ".png";
             InputStream inputStream = new URL(imageUrl).openStream();
 
             stickerFactory.createSticker(inputStream, fileName);
