@@ -1,65 +1,46 @@
-import utils.JsonParser;
+import entities.ClientHttp;
+import entities.Content;
+import utils.APIExtractor;
+import utils.ImdbAPIExtractor;
+import utils.NasaAPIExtractor;
 import utils.StickerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
-
-import static java.lang.Math.round;
-
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        // Make an HTTP connection consuming the API
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-        URI uri = URI.create(url);
+        //  Make an HTTP connection consuming the API
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri).GET().build();
-        HttpResponse<String> response;
-        try {
-            response = client.send(request, BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        // Nasa API
+         String url = "https://api.nasa.gov/planetary/apod?api_key=KLIb9CAcq8DKLUAEIXVBNSPXoF58URzDOIwxifFn&start_date=2023-03-28&end_date=2023-03-31";
+         APIExtractor apiExtractor = new NasaAPIExtractor();
 
-        String body = response.body();
+        // Imdb API
+//        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+//        APIExtractor apiExtractor = new ImdbAPIExtractor();
 
-        // We will get only the useful data (Title, Poster and Rating)
-        JsonParser parser = new JsonParser();
-        List<Map<String, String>> moviesList = parser.parse(body);
+        var clientHttp = new ClientHttp();
+        String json = clientHttp.getAllContent(url);
+        List<Content> contentList = apiExtractor.extractData(json);
 
         // Display and manipulate the data
-        var folderPath = new File("assets/stickers/");
+        var folderPath = new File("assets/img/");
         folderPath.mkdir();
 
         var stickerFactory = new StickerFactory();
+        for (Content content : contentList) {
+            System.out.println(content.getTitle());
 
-        for(Map<String, String> movie: moviesList){
-            System.out.println("\n");
-            System.out.println("\u001b[1mTitle: " + movie.get("title") + "\u001b[m");
-            System.out.println("Image url:" + movie.get("image"));
-            System.out.println("Rating: \u001b[3m" + movie.get("imDbRating") + "\u001b[m");
-
-            int imDbRating = (int) round(Double.parseDouble(movie.get("imDbRating")));
-            for (int i = 0; i < imDbRating; i++){
-                    System.out.print("⭐");
-                }
-
-            String imageUrl = movie.get("image");
-            String fileName = folderPath + movie.get("title") + ".png";
+            String imageUrl = content.getUrl();
+            String fileName = folderPath + content.getTitle() + ".png";
             InputStream inputStream = new URL(imageUrl).openStream();
 
             stickerFactory.createSticker(inputStream, fileName);
-            }
+        }
         }
     }

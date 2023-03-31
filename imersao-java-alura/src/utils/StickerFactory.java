@@ -27,7 +27,7 @@ public class StickerFactory {
         graphics.drawImage(originalImage, 0, 0, null);
 
         // Style settings
-        graphics.setColor(Color.cyan);
+        graphics.setColor(Color.BLACK);
         graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 64));
 
         // Write something on the new image

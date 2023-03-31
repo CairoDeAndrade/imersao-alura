@@ -2,9 +2,9 @@ package utils;
 
 import entities.Content;
 
-public interface Extractor {
+import java.util.List;
 
-    Content extract(){
-        return new Content();
-    }
+public interface APIExtractor {
+
+    List<Content> extractData(String json);
 }
