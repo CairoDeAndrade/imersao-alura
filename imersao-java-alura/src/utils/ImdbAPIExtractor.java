@@ -14,11 +14,6 @@ public class ImdbAPIExtractor implements APIExtractor{
         JsonParser parser = new JsonParser();
         List<Map<String, String>> jsonList = parser.parse(json);
 
-        List<Content> contentList = new ArrayList<>();
-
-        for (Map<String, String> content : jsonList) {
-            contentList.add(new Content(content.get("image"), content.get("title")));
-        }
-        return contentList;
+        return jsonList.stream().map(content -> new Content(content.get("image"), content.get("title"))).collect(Collectors.toList());
     }
 }
