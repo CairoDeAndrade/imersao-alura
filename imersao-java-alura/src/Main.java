@@ -1,6 +1,7 @@
 import utils.JsonParser;
 import utils.StickerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -38,7 +39,11 @@ public class Main {
         List<Map<String, String>> moviesList = parser.parse(body);
 
         // Display and manipulate the data
+        var folderPath = new File("assets/stickers/");
+        folderPath.mkdir();
+
         var stickerFactory = new StickerFactory();
+
         for(Map<String, String> movie: moviesList){
             System.out.println("\n");
             System.out.println("\u001b[1mTitle: " + movie.get("title") + "\u001b[m");
@@ -51,7 +56,7 @@ public class Main {
                 }
 
             String imageUrl = movie.get("image");
-            String fileName = "assets/output-img/" + movie.get("title") + ".png";
+            String fileName = folderPath + movie.get("title") + ".png";
             InputStream inputStream = new URL(imageUrl).openStream();
 
             stickerFactory.createSticker(inputStream, fileName);
