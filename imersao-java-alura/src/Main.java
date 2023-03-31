@@ -1,5 +1,6 @@
 import entities.ClientHttp;
 import entities.Content;
+import enums.API;
 import utils.APIExtractor;
 import utils.NasaAPIExtractor;
 import utils.StickerFactory;
@@ -14,14 +15,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //  Make an HTTP connection consuming the API
-
-        // Nasa API
-         String url = "https://api.nasa.gov/planetary/apod?api_key=KLIb9CAcq8DKLUAEIXVBNSPXoF58URzDOIwxifFn&start_date=2023-03-28&end_date=2023-03-31";
-         APIExtractor apiExtractor = new NasaAPIExtractor();
-
-        // Imdb API
-//        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-//        APIExtractor apiExtractor = new ImdbAPIExtractor();
+        API api = API.NASA;
+        String url = api.getUrl();
+        APIExtractor apiExtractor = api.getExtractor();
 
         var clientHttp = new ClientHttp();
         String json = clientHttp.getAllContent(url);
