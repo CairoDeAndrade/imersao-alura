@@ -5,6 +5,7 @@ import entities.Content;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ImdbAPIExtractor implements APIExtractor{
 

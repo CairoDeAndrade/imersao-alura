@@ -1,5 +1,7 @@
 package entities;
 
+import entities.excepions.ClientHttpException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -47,7 +49,7 @@ public class ClientHttp {
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new ClientHttpException("Error in consulting url");
         }
 
         return response.body();
