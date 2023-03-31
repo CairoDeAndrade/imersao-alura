@@ -2,6 +2,7 @@ package utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +31,15 @@ public class StickerFactory {
         graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 64));
 
         // Write something on the new image
-        graphics.drawString("Image text", 100, newHeight - 100);
+        String text = "Image text";
+
+        FontMetrics fontMetrics = graphics.getFontMetrics();
+        Rectangle2D textRectangle = fontMetrics.getStringBounds(text, graphics);
+
+        int textWidth = (int) textRectangle.getWidth();
+        int centeredPosition = (width - textWidth) / 2;
+
+        graphics.drawString(text, centeredPosition, newHeight - 75);
 
         // Write the new image in a file
         ImageIO.write(newImage, "png", new File(fileName));
