@@ -1,29 +1,32 @@
 package br.com.alura.languages.api.entities;
 
-import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "mainLanguages")
 public class Language {
 	
-	private Long id;
+	@Id
+	private String id;
 	private String name;
-	private String imageUrl;
-	private Integer rankPosition;
+	private String image;
+	private Integer ranking;
 	
 	public Language() {
 	}
 
-	public Language(String name, String imageUrl, Integer rankPosition) {
+	public Language(String name, String image, Integer ranking) {
 		super();
 		this.name = name;
-		this.imageUrl = imageUrl;
-		this.rankPosition = rankPosition;
+		this.image = image;
+		this.ranking = ranking;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -35,36 +38,19 @@ public class Language {
 		this.name = name;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
-	public Integer getRankPosition() {
-		return rankPosition;
+	public Integer getRanking() {
+		return ranking;
 	}
 
-	public void setRankPosition(Integer rankPosition) {
-		this.rankPosition = rankPosition;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Language other = (Language) obj;
-		return Objects.equals(id, other.id);
+	public void setRanking(Integer ranking) {
+		this.ranking = ranking;
 	}
 }

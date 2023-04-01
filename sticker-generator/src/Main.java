@@ -17,6 +17,7 @@ public class Main {
         //  Make an HTTP connection consuming the API
         API api = API.NASA;
         String url = api.getUrl();
+        
         APIExtractor apiExtractor = api.getExtractor();
 
         var clientHttp = new ClientHttp();
