@@ -1,6 +1,7 @@
 package br.com.alura.languages.api.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,13 @@ public class LanguageService {
 	public List<LanguageDTO> findAll() {
 		List<Language> list = repository.findAll();
 		return list.stream().map(obj -> new LanguageDTO(obj)).collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public LanguageDTO findById(String id) {
+		Optional<Language> obj = repository.findById(id);
+		Language entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		return new LanguageDTO(entity);
 	}
 	
 	@Transactional

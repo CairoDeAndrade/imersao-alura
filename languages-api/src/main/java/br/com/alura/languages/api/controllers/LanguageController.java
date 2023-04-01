@@ -31,6 +31,12 @@ public class LanguageController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<LanguageDTO> findById(@PathVariable String id) {
+		LanguageDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 	@PostMapping
 	public ResponseEntity<LanguageDTO> insert(@RequestBody Language language){
 		LanguageDTO languageDTO = service.insert(language);
