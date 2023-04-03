@@ -2,7 +2,6 @@ import entities.ClientHttp;
 import entities.Content;
 import enums.API;
 import utils.APIExtractor;
-import utils.NasaAPIExtractor;
 import utils.StickerFactory;
 
 import java.io.File;
@@ -15,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //  Make an HTTP connection consuming the API
-        API api = API.NASA;
+        API api = API.LANGUAGES;
         String url = api.getUrl();
         
         APIExtractor apiExtractor = api.getExtractor();

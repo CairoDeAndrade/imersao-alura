@@ -18,7 +18,7 @@ public class StickerFactory {
         // Create a new movie image in memory with another size and transparency
         int width = originalImage.getWidth();
         int height = originalImage.getHeight();
-        int newHeight = height + 200;
+        int newHeight = height + 100;
 
         var newImage = new BufferedImage(width, newHeight, Transparency.TRANSLUCENT);
 
@@ -27,8 +27,8 @@ public class StickerFactory {
         graphics.drawImage(originalImage, 0, 0, null);
 
         // Style settings
-        graphics.setColor(Color.BLACK);
-        graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 64));
+        graphics.setColor(Color.RED);
+        graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
 
         // Write something on the new image
         String text = "Image text";
@@ -39,7 +39,7 @@ public class StickerFactory {
         int textWidth = (int) textRectangle.getWidth();
         int centeredPosition = (width - textWidth) / 2;
 
-        graphics.drawString(text, centeredPosition, newHeight - 75);
+        graphics.drawString(text, centeredPosition, newHeight - 25);
 
         // Write the new image in a file
         ImageIO.write(newImage, "png", new File(fileName));
